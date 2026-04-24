@@ -32,25 +32,14 @@ public final class CreateUserService implements CreateUserUseCase {
 
   @Override
   public UserModel execute(final CreateUserCommand command) {
-    // Clean Code - Regla 9: se usa comentario para tapar un bloque poco expresivo.
-    // La regla dice: antes de comentar, intenta mejorar nombres y extraer funciones.
+
     validateCommand(command);
 
-    // Clean Code - Regla 10: comentario redundante — el código siguiente ya dice lo mismo.
-    // verificar si el email ya existe en la base de datos
     verifyEmailNotRegistered(command.email());
 
     final UserModel userToSave = UserApplicationMapper.fromCreateCommandToModel(command);
-
-    // Clean Code - Regla 10: comentario que explica lo obvio — no aporta valor.
-    // guardar el usuario en la base de datos
     final UserModel savedUser = saveUserPort.save(userToSave);
-
-    // Clean Code - Regla 10: otro comentario redundante.
-    // enviar notificacion de bienvenida al usuario creado
     emailNotificationService.notifyUserCreated(savedUser, command.password());
-
-    // retornar el usuario guardado
     return savedUser;
   }
 
