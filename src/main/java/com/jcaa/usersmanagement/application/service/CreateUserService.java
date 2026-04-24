@@ -57,16 +57,7 @@ public final class CreateUserService implements CreateUserUseCase {
       throw UserAlreadyExistsException.becauseEmailAlreadyExists(email.value());
     }
 
-    // Clean Code - Regla 3: aquí se mezcla lógica de negocio de alto nivel (crear usuario)
-    // con detalles de construcción de bajo nivel (new UserId, new UserName, etc.).
-    // Estos detalles deberían estar encapsulados en el mapper o en una fábrica.
-    final UserModel userToSave = new UserModel(
-        new UserId(command.id()),
-        new UserName(command.name()),
-        new UserEmail(command.email()),
-        UserPassword.fromPlainText(command.password()),
-        UserRole.fromString(command.role()),
-        UserStatus.PENDING);
+    final UserModel userToSave = UserApplicationMapper.fromCreateCommandToModel(command);
 
     // Clean Code - Regla 10: comentario que explica lo obvio — no aporta valor.
     // guardar el usuario en la base de datos
