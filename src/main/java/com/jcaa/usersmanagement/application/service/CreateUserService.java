@@ -36,8 +36,6 @@ public final class CreateUserService implements CreateUserUseCase {
     // La regla dice: antes de comentar, intenta mejorar nombres y extraer funciones.
     validateCommand(command);
 
-    log.info("Creando usuario con email=" + command.email() + ", nombre=" + command.name());
-
     // Clean Code - Regla 10: comentario redundante — el código siguiente ya dice lo mismo.
     // verificar si el email ya existe en la base de datos
     verifyEmailNotRegistered(command.email());
