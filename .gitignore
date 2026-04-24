@@ -40,3 +40,10 @@ build/
 .idea/
 *.log
 
+.env
+.env.local
+.env.*.local
+
+# Application properties con credenciales (no subir a git)
+src/main/resources/application.properties
+
